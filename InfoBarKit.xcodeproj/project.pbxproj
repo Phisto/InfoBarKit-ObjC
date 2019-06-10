@@ -130,9 +130,9 @@
 		F452725A224FB6C100B6C86B /* InfoBarKit */ = {
 			isa = PBXGroup;
 			children = (
-				F452728A224FB86C00B6C86B /* Source */,
 				F452725B224FB6C100B6C86B /* InfoBarKit.h */,
 				F452725C224FB6C100B6C86B /* Info.plist */,
+				F452728A224FB86C00B6C86B /* Source */,
 			);
 			path = InfoBarKit;
 			sourceTree = "<group>";
