@@ -16,11 +16,12 @@
 		F4527282224FB82400B6C86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4527280224FB82400B6C86B /* Main.storyboard */; };
 		F4527285224FB82400B6C86B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4527284224FB82400B6C86B /* main.m */; };
 		F452728F224FB89500B6C86B /* SGInfoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F452728B224FB89500B6C86B /* SGInfoBar.m */; };
-		F4527290224FB89500B6C86B /* SGInfoBarTask.h in Headers */ = {isa = PBXBuildFile; fileRef = F452728C224FB89500B6C86B /* SGInfoBarTask.h */; };
-		F4527291224FB89500B6C86B /* SGInfoBar.h in Headers */ = {isa = PBXBuildFile; fileRef = F452728D224FB89500B6C86B /* SGInfoBar.h */; };
+		F4527290224FB89500B6C86B /* SGInfoBarTask.h in Headers */ = {isa = PBXBuildFile; fileRef = F452728C224FB89500B6C86B /* SGInfoBarTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F4527291224FB89500B6C86B /* SGInfoBar.h in Headers */ = {isa = PBXBuildFile; fileRef = F452728D224FB89500B6C86B /* SGInfoBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F4527292224FB89500B6C86B /* SGInfoBarTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F452728E224FB89500B6C86B /* SGInfoBarTask.m */; };
 		F4527293224FBC5F00B6C86B /* InfoBarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4527258224FB6C100B6C86B /* InfoBarKit.framework */; };
 		F4527294224FBC5F00B6C86B /* InfoBarKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F4527258224FB6C100B6C86B /* InfoBarKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F45B06C022AF1A58006E3467 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F45B06BF22AF1A58006E3467 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		F452728C224FB89500B6C86B /* SGInfoBarTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGInfoBarTask.h; sourceTree = "<group>"; };
 		F452728D224FB89500B6C86B /* SGInfoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGInfoBar.h; sourceTree = "<group>"; };
 		F452728E224FB89500B6C86B /* SGInfoBarTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGInfoBarTask.m; sourceTree = "<group>"; };
+		F45B06BF22AF1A58006E3467 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				F4527265224FB6C200B6C86B /* InfoBarKitTests */,
 				F4527277224FB82100B6C86B /* InfoBarExample-ObjC */,
 				F4527259224FB6C100B6C86B /* Products */,
+				F45B06BF22AF1A58006E3467 /* .gitignore */,
 			);
 			sourceTree = "<group>";
 		};
@@ -287,6 +290,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F45B06C022AF1A58006E3467 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
