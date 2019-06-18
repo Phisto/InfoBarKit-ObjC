@@ -8,8 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class SGInfoBar;
+
 @interface ViewController : NSViewController
 
+@property (nonatomic, weak) IBOutlet SGInfoBar *infoBar;
 
 @end
 

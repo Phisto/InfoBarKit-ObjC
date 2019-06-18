@@ -721,19 +721,34 @@
                                         <integer key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="progress">
-                                        <real key="value" value="2"/>
+                                        <real key="value" value="0.5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="secondaryStringValue" value="Device Settings"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="seperatorValue" value="(^_^)"/>
                                 </userDefinedRuntimeAttributes>
                             </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G2J-8A-c2T">
+                                <rect key="frame" x="14" y="178" width="66" height="32"/>
+                                <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QRa-18-iNY">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="test:" target="XfG-lQ-9wD" id="m6f-O8-ITf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="oNV-SA-wYs" secondAttribute="trailing" constant="20" id="1Kd-Uv-CTq"/>
                             <constraint firstItem="oNV-SA-wYs" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="JCV-ix-Wk4"/>
+                            <constraint firstItem="G2J-8A-c2T" firstAttribute="top" secondItem="oNV-SA-wYs" secondAttribute="bottom" constant="20" id="LiA-0N-nUz"/>
                             <constraint firstItem="oNV-SA-wYs" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="Nqt-Si-baG"/>
+                            <constraint firstItem="G2J-8A-c2T" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="s0C-iG-21Y"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="infoBar" destination="oNV-SA-wYs" id="CVc-oj-0RQ"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
