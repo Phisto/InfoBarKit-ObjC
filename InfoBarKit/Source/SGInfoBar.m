@@ -325,6 +325,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     self.infoTextField.stringValue = value;
 }
 
+
 #pragma mark - Setter
 
 
