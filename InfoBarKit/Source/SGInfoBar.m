@@ -8,9 +8,10 @@
 
 #import "SGInfoBar.h"
 
-///----------------------
+#pragma mark - CONSTANTS
+///----------------------------------
 /// @name CONSTANTS
-///----------------------
+///----------------------------------
 
 
 
@@ -19,9 +20,10 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 
 
 
-///----------------------
+#pragma mark - CATEGORIES
+///-----------------------------------
 /// @name CATEGORIES
-///----------------------
+///-----------------------------------
 
 
 
@@ -30,16 +32,16 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 @property (nonatomic, strong) NSProgressIndicator *undeterminedProgressIndicator;
 @property (weak, nonatomic) NSLayoutConstraint *labelConstraint;
 @property (nonatomic, strong) NSTextField *infoTextField;
-
-@property (nonatomic, strong) NSArray<SGInfoBarTask *> *tasks;
+@property (nonatomic, strong) NSMutableArray<SGInfoBarTask *> *tasks;
 
 @end
 
 
 
-///----------------------
+#pragma mark - IMPLEMENTATION
+///-----------------------------------------
 /// @name IMPLEMENTATION
-///----------------------
+///-----------------------------------------
 
 
 
@@ -65,7 +67,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     self = [super initWithCoder:decoder];
     if (self) {
         
-        [self setupView];
+        [self private_init];
     }
     return self;
 }
@@ -76,15 +78,15 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     self = [super initWithFrame:frameRect];
     if (self) {
         
-        [self setupView];
+        [self private_init];
     }
     return self;
 }
 
 
-- (void)setupView {
+- (void)private_init {
     
-    _tasks = @[];
+    _tasks = [NSMutableArray array];
     _stringValue = @"";
     _seperatorValue = @":";
     _progress = 0.0f;
@@ -97,72 +99,90 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 }
 
 
-- (void)setUpUndeterminedProgressIndicator {
-    
-    NSProgressIndicator *progress = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect(0, 0, 16, 16)];
-    progress.style = NSProgressIndicatorStyleSpinning;
-    progress.displayedWhenStopped = NO;
-    progress.controlSize = NSControlSizeSmall;
-    [self addSubview:progress];
-    progress.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint constraintWithItem:progress
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1.0
-                                  constant:5.0f].active = YES;
-    
-    [NSLayoutConstraint constraintWithItem:progress
-                                 attribute:NSLayoutAttributeCenterY
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeCenterY
-                                multiplier:1.0
-                                  constant:0.0f].active = YES;
-    self.undeterminedProgressIndicator = progress;
+#pragma mark - Adding tasks
+
+
+- (void)addTask:(SGInfoBarTask *)task {
+  
+    [self.tasks addObject:task];
+    [self recalculateDrawings];
 }
 
 
-- (void)setUpTextField {
+- (void)addTasks:(NSArray<SGInfoBarTask *> *)tasks {
     
-    NSTextField *textField = [[NSTextField alloc] initWithFrame:self.bounds];
-    textField.bordered = NO;
-    textField.stringValue = @"";
-    textField.editable = NO;
-    textField.selectable = NO;
-    textField.drawsBackground = NO;
-    textField.textColor = [NSColor controlTextColor];
-    [self addSubview:textField];
-    textField.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint constraintWithItem:textField
-                                 attribute:NSLayoutAttributeCenterY
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeCenterY
-                                multiplier:1.0
-                                  constant:0.0f].active = YES;
-    
-    self.labelConstraint = [NSLayoutConstraint constraintWithItem:textField
-                                                        attribute:NSLayoutAttributeLeading
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeLeading
-                                                       multiplier:1.0
-                                                         constant:kSGTextFieldMinMarign];
-    self.labelConstraint.active = YES;
-    [NSLayoutConstraint constraintWithItem:textField
-                                 attribute:NSLayoutAttributeTrailing
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeTrailing
-                                multiplier:1.0
-                                  constant:10.0f].active = YES;
-    self.infoTextField = textField;
+    [self.tasks addObjectsFromArray:tasks];
+    [self recalculateDrawings];
 }
 
 
-#pragma mark - Drawing the info bar view
+#pragma mark - Removing tasks
+
+
+- (void)removeTask:(SGInfoBarTask *)task {
+    
+    if (task) {
+        [self.tasks removeObject:task];
+        [self recalculateDrawings];
+    }
+}
+
+
+- (void)removeTasks:(NSArray<SGInfoBarTask *> *)tasks {
+    
+    [self.tasks removeObjectsInArray:tasks];
+    [self recalculateDrawings];
+}
+
+
+#pragma mark - Calculate drawings
+
+
+- (void)recalculateDrawings {
+    
+    if (self.tasks.count > 0) {
+        
+        SGInfoBarTask *task = self.tasks.firstObject;
+        if (!task.taskProgressDescription) {
+            
+            self.infoTextField.stringValue = [NSString stringWithFormat:@"%@ %@ %@", self.stringValue, self.seperatorValue, task.taskName];
+        }
+        else {
+            
+            self.infoTextField.stringValue = [NSString stringWithFormat:@"%@ %@ %@ | %@", self.stringValue, self.seperatorValue, task.taskName, task.taskProgressDescription];
+        }
+        
+        self.badgeCount = self.tasks.count;
+        self.labelConstraint.animator.constant = kSGTextFieldMaxMarign;
+        [self.undeterminedProgressIndicator performSelector:@selector(startAnimation:) withObject:self afterDelay:0.15f];
+    }
+    else {
+        
+        self.badgeCount = 0;
+        
+        [self drawText];
+        
+        [self.undeterminedProgressIndicator performSelector:@selector(stopAnimation:) withObject:self afterDelay:0.1f];
+        self.labelConstraint.animator.constant = kSGTextFieldMinMarign;
+    }
+    
+    [self setNeedsUpdateConstraints:YES];
+    [self setNeedsLayout:YES];
+    [self setNeedsDisplay:YES];
+}
+
+
+- (void)drawText {
+    
+    NSString *value = self.stringValue;
+    if (self.secondaryStringValue) {
+        value = [NSString stringWithFormat:@"%@ %@ %@", self.stringValue, self.seperatorValue, self.secondaryStringValue];
+    }
+    self.infoTextField.stringValue = value;
+}
+
+
+#pragma mark - Drawing the view
 
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -217,7 +237,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 - (void)drawBadgeWithCount:(NSInteger)badgeCount inFrame:(NSRect)frame {
     
     //// badgeOutline Drawing
-    NSBezierPath* badgeOutlinePath = [NSBezierPath bezierPathWithOvalInRect: NSMakeRect(NSMinX(frame) + frame.size.width - 21, NSMinY(frame) + frame.size.height - 19, 14, 14)];
+    NSBezierPath* badgeOutlinePath = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(NSMinX(frame) + frame.size.width - 21, NSMinY(frame) + frame.size.height - 19, 14, 14)];
     [self.badgeColor setFill];
     [badgeOutlinePath fill];
     
@@ -245,84 +265,72 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 }
 
 
-#pragma mark - Adding tasks to the info bar
+#pragma mark - Setup methodes
 
 
-- (void)addTask:(SGInfoBarTask *)task {
+- (void)setUpUndeterminedProgressIndicator {
     
-    [self addTasks:@[task]];
+    NSProgressIndicator *progress = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect(0, 0, 16, 16)];
+    progress.style = NSProgressIndicatorStyleSpinning;
+    progress.displayedWhenStopped = NO;
+    progress.controlSize = NSControlSizeSmall;
+    [self addSubview:progress];
+    progress.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint constraintWithItem:progress
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1.0
+                                  constant:5.0f].active = YES;
+    
+    [NSLayoutConstraint constraintWithItem:progress
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeCenterY
+                                multiplier:1.0
+                                  constant:0.0f].active = YES;
+    self.undeterminedProgressIndicator = progress;
 }
 
 
-- (void)addTasks:(NSArray<SGInfoBarTask *> *)tasks {
+- (void)setUpTextField {
     
-    self.tasks = [self.tasks arrayByAddingObjectsFromArray:tasks];
-    [self recalculateDrawings];
-}
-
-
-#pragma mark - Removing tasks from the info bar
-
-
-- (void)removeTask:(SGInfoBarTask *)task {
+    NSTextField *textField = [[NSTextField alloc] initWithFrame:self.bounds];
+    textField.bordered = NO;
+    textField.stringValue = @"";
+    textField.editable = NO;
+    textField.selectable = NO;
+    textField.drawsBackground = NO;
+    textField.textColor = [NSColor controlTextColor];
+    textField.lineBreakMode = NSLineBreakByTruncatingTail;
+    [self addSubview:textField];
+    textField.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint constraintWithItem:textField
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeCenterY
+                                multiplier:1.0
+                                  constant:0.0f].active = YES;
     
-    if (task) [self removeTasks:@[task]];
-}
-
-
-- (void)removeTasks:(NSArray<SGInfoBarTask *> *)tasks {
-    
-    NSMutableArray *array = [NSMutableArray arrayWithArray:self.tasks];
-    [array removeObjectsInArray:tasks];
-    self.tasks = [array copy];
-    
-    [self recalculateDrawings];
-}
-
-
-#pragma mark - 
-
-
-- (void)recalculateDrawings {
-    
-    if (self.tasks.count > 0) {
-        
-        SGInfoBarTask *task = self.tasks.firstObject;
-        if (!task.taskProgressDescription) {
-            
-            self.infoTextField.stringValue = [NSString stringWithFormat:@"%@ %@ %@", self.stringValue, self.seperatorValue, task.taskName];
-        }
-        else {
-            
-            self.infoTextField.stringValue = [NSString stringWithFormat:@"%@ %@ %@ | %@", self.stringValue, self.seperatorValue, task.taskName, task.taskProgressDescription];
-        }
-        
-        self.badgeCount = self.tasks.count;
-        self.labelConstraint.animator.constant = kSGTextFieldMaxMarign;
-        [self.undeterminedProgressIndicator performSelector:@selector(startAnimation:) withObject:self afterDelay:0.15f];
-    }
-    else {
-        
-        self.badgeCount = 0;
-        
-        [self recalculateStringValue];
-        
-        [self.undeterminedProgressIndicator performSelector:@selector(stopAnimation:) withObject:self afterDelay:0.1f];
-        self.labelConstraint.animator.constant = kSGTextFieldMinMarign;
-    }
-    
-    [self setNeedsUpdateConstraints:YES];
-    [self setNeedsDisplay:YES];
-}
-
-
-- (void)recalculateStringValue {
-    
-    NSString *value = self.stringValue;
-    if (self.secondaryStringValue) {
-        value = [NSString stringWithFormat:@"%@ %@ %@", self.stringValue, self.seperatorValue, self.secondaryStringValue];
-    }
-    self.infoTextField.stringValue = value;
+    self.labelConstraint = [NSLayoutConstraint constraintWithItem:textField
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0
+                                                         constant:kSGTextFieldMinMarign];
+    self.labelConstraint.active = YES;
+    [NSLayoutConstraint constraintWithItem:textField
+                                 attribute:NSLayoutAttributeTrailing
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeTrailing
+                                multiplier:1.0
+                                  constant:-30.0f].active = YES;
+    self.infoTextField = textField;
 }
 
 
@@ -360,20 +368,19 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 - (void)setStringValue:(NSString *)stringValue {
     
     _stringValue = stringValue;
-    //_infoTextField.stringValue = stringValue;
-    [self recalculateStringValue];
+    [self drawText];
 }
 
 - (void)setSecondaryStringValue:(NSString *)secondaryStringValue {
     
     _secondaryStringValue = secondaryStringValue;
-    [self recalculateStringValue];
+    [self drawText];
 }
 
 - (void)setSeperatorValue:(NSString *)seperatorValue {
     
     _seperatorValue = seperatorValue;
-    [self recalculateStringValue];
+    [self drawText];
 }
 
 - (void)setProgress:(CGFloat)progress {
@@ -397,7 +404,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     
     if (!_outlineColor) {
         
-        //_outlineColor = [NSColor colorWithRed:0.827f green:0.824f blue:0.827f alpha:1.0f];
         _outlineColor = [NSColor disabledControlTextColor];
     }
     return _outlineColor;

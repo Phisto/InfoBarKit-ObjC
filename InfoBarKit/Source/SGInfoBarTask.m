@@ -8,15 +8,31 @@
 
 #import "SGInfoBarTask.h"
 
+#pragma mark - CATEGORIES
+///-----------------------------------
+/// @name CATEGORIES
+///-----------------------------------
+
+
 
 @interface SGInfoBarTask (/* Private */)
 
+/// A unique string identifying the task.
 @property (nonatomic, strong) NSString *uniqueID;
 
 @end
 
+
+
+#pragma mark - IMPLEMENTATION
+///-----------------------------------------
+/// @name IMPLEMENTATION
+///-----------------------------------------
+
+
+
 @implementation SGInfoBarTask
-#pragma mark - Creating a info bar task object
+#pragma mark - Creating a task
 
 
 + (instancetype)taskWithName:(NSString *)name {
@@ -30,12 +46,17 @@
     self = [super init];
     if (self) {
      
-        _done = NO;
         _taskName = name;
         _determined = NO;
         _uniqueID = [[NSUUID UUID] UUIDString];
     }
     return self;
+}
+
+
+- (instancetype)init {
+    
+    return [self initWithName:@""];
 }
 
 
