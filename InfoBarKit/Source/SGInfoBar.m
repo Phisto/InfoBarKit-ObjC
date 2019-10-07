@@ -122,16 +122,21 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 - (void)removeTask:(SGInfoBarTask *)task {
     
     if (task) {
-        [self.tasks removeObject:task];
-        [self recalculateDrawings];
+        
+        [self.tasks performSelector:@selector(removeObject:) withObject:task afterDelay:0.1f];
+        //[self.tasks removeObject:task];
+        [self performSelector:@selector(recalculateDrawings) withObject:nil afterDelay:0.2f];
+        //[self recalculateDrawings];
     }
 }
 
 
 - (void)removeTasks:(NSArray<SGInfoBarTask *> *)tasks {
     
-    [self.tasks removeObjectsInArray:tasks];
-    [self recalculateDrawings];
+    [self.tasks performSelector:@selector(removeObjectsInArray:) withObject:tasks afterDelay:0.1f];
+    //[self.tasks removeObjectsInArray:tasks];
+    [self performSelector:@selector(recalculateDrawings) withObject:nil afterDelay:0.2f];
+    //[self recalculateDrawings];
 }
 
 
