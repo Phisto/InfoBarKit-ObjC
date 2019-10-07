@@ -155,6 +155,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
         self.badgeCount = self.tasks.count;
         self.labelConstraint.animator.constant = kSGTextFieldMaxMarign;
         [self.undeterminedProgressIndicator performSelector:@selector(startAnimation:) withObject:self afterDelay:0.15f];
+        [self performSelector:@selector(hideProgressIndicator:) withObject:@(NO) afterDelay:0.15f];
     }
     else {
         
@@ -163,6 +164,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
         [self drawText];
         
         [self.undeterminedProgressIndicator performSelector:@selector(stopAnimation:) withObject:self afterDelay:0.1f];
+        [self performSelector:@selector(hideProgressIndicator:) withObject:@(YES) afterDelay:0.1f];
         self.labelConstraint.animator.constant = kSGTextFieldMinMarign;
     }
     
@@ -179,6 +181,18 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
         value = [NSString stringWithFormat:@"%@ %@ %@", self.stringValue, self.seperatorValue, self.secondaryStringValue];
     }
     self.infoTextField.stringValue = value;
+}
+
+
+#pragma mark - Change progress visibility
+
+
+- (void)hideProgressIndicator:(NSNumber *)hide {
+    
+    self.undeterminedProgressIndicator.hidden = hide.boolValue;
+    [self setNeedsUpdateConstraints:YES];
+    [self setNeedsLayout:YES];
+    [self setNeedsDisplay:YES];
 }
 
 
