@@ -3,8 +3,6 @@
 
 # InfoBarKit
 
-## Overview
-
 The InfoBarKit framework provides an info bar view similar to the info bar in the toolbar of the Xcode project window.
 
 
@@ -26,7 +24,7 @@ github "Phisto/InfoBarKit-ObjC" ~> 0.1
 ### Manually
 
 If you prefer not to use Carthage, you can integrate InfoBarKit into your project manually.
-You only need to build and add the CoreAudioConverter framework (CoreAudioConverter.framework) to your project. 
+You only need to build and add the InfoBarKit framework (InfoBarKit.framework) to your project. 
 
 
 ## Usage
