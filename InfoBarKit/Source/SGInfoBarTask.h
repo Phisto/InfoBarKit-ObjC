@@ -43,21 +43,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite, getter=isDetermined) BOOL determined;
 
 
-
 #pragma mark - Creating a task
 ///-------------------------------------------
 /// @name Creating a task
 ///-------------------------------------------
 
 /**
- 
  @brief Creates a task with the given name.
- 
  @return A SGInfoBarTask object with the given name.
- 
  */
 + (instancetype)taskWithName:(NSString *)name;
-
 
 
 @end

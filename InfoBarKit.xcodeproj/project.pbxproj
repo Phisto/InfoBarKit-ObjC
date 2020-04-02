@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A1BF00A2436622500FC8DEA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4A1BF0092436622500FC8DEA /* LICENSE */; };
 		F4527262224FB6C200B6C86B /* InfoBarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4527258224FB6C100B6C86B /* InfoBarKit.framework */; };
 		F4527267224FB6C200B6C86B /* InfoBarKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4527266224FB6C200B6C86B /* InfoBarKitTests.m */; };
 		F4527269224FB6C200B6C86B /* InfoBarKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F452725B224FB6C100B6C86B /* InfoBarKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,6 +57,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4A1BF0082436606700FC8DEA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4A1BF0092436622500FC8DEA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		F4527258224FB6C100B6C86B /* InfoBarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InfoBarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F452725B224FB6C100B6C86B /* InfoBarKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoBarKit.h; sourceTree = "<group>"; };
 		F452725C224FB6C100B6C86B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				F4527265224FB6C200B6C86B /* InfoBarKitTests */,
 				F4527277224FB82100B6C86B /* InfoBarExample-ObjC */,
 				F4527259224FB6C100B6C86B /* Products */,
+				4A1BF0082436606700FC8DEA /* README.md */,
+				4A1BF0092436622500FC8DEA /* LICENSE */,
 				F45B06BF22AF1A58006E3467 /* .gitignore */,
 			);
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A1BF00A2436622500FC8DEA /* LICENSE in Resources */,
 				F45B06C022AF1A58006E3467 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

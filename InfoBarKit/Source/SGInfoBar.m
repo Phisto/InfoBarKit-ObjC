@@ -9,22 +9,13 @@
 #import "SGInfoBar.h"
 
 #pragma mark - CONSTANTS
-///----------------------------------
-/// @name CONSTANTS
-///----------------------------------
-
 
 
 static CGFloat const kSGTextFieldMinMarign = 8.0f;
 static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 
 
-
 #pragma mark - CATEGORIES
-///-----------------------------------
-/// @name CATEGORIES
-///-----------------------------------
-
 
 
 @interface SGInfoBar (/* Private */)
@@ -37,17 +28,11 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 @end
 
 
-
 #pragma mark - IMPLEMENTATION
-///-----------------------------------------
-/// @name IMPLEMENTATION
-///-----------------------------------------
-
 
 
 @implementation SGInfoBar
 #pragma mark - Synthesize
-
 
 @synthesize fillColor = _fillColor;
 @synthesize outlineColor = _outlineColor;
@@ -58,9 +43,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 @synthesize progress = _progress;
 @synthesize badgeCount = _badgeCount;
 
-
 #pragma mark - Creating an info bar view
-
 
 - (instancetype)initWithCoder:(NSCoder *)decoder {
     
@@ -72,7 +55,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     return self;
 }
 
-
 - (instancetype)initWithFrame:(NSRect)frameRect {
     
     self = [super initWithFrame:frameRect];
@@ -82,7 +64,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     }
     return self;
 }
-
 
 - (void)private_init {
     
@@ -98,9 +79,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [self setNeedsUpdateConstraints:YES];
 }
 
-
 #pragma mark - Adding tasks
-
 
 - (void)addTask:(SGInfoBarTask *)task {
   
@@ -108,16 +87,13 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [self recalculateDrawings];
 }
 
-
 - (void)addTasks:(NSArray<SGInfoBarTask *> *)tasks {
     
     [self.tasks addObjectsFromArray:tasks];
     [self recalculateDrawings];
 }
 
-
 #pragma mark - Removing tasks
-
 
 - (void)removeTask:(SGInfoBarTask *)task {
     
@@ -130,7 +106,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     }
 }
 
-
 - (void)removeTasks:(NSArray<SGInfoBarTask *> *)tasks {
     
     [self.tasks performSelector:@selector(removeObjectsInArray:) withObject:tasks afterDelay:0.1f];
@@ -139,9 +114,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     //[self recalculateDrawings];
 }
 
-
 #pragma mark - Calculate drawings
-
 
 - (void)recalculateDrawings {
     
@@ -178,7 +151,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [self setNeedsDisplay:YES];
 }
 
-
 - (void)drawText {
     
     NSString *value = self.stringValue;
@@ -188,9 +160,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     self.infoTextField.stringValue = value;
 }
 
-
 #pragma mark - Change progress visibility
-
 
 - (void)hideProgressIndicator:(NSNumber *)hide {
     
@@ -200,16 +170,12 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [self setNeedsDisplay:YES];
 }
 
-
 #pragma mark - Drawing the view
 
-
 - (void)drawRect:(NSRect)dirtyRect {
-    
     // Drawing code here.
     [self drawInfoBarWithFrame:dirtyRect];
 }
-
 
 - (void)drawInfoBarWithFrame:(NSRect)frame {
     
@@ -226,7 +192,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     if (_badgeCount > 0) [self drawBadgeWithCount:_badgeCount inFrame:frame];
 }
 
-
 - (void)drawOutlineInFrame:(NSRect)frame {
     
     //// outline Drawing
@@ -235,14 +200,12 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [outlinePath fill];
 }
 
-
 - (void)drawFillingInFrame:(NSRect)frame {
     
     NSBezierPath* fillPath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 1, NSMinY(frame) + frame.size.height - 23, floor((frame.size.width - 1) * 0.99791 + 0.5), 22) xRadius: 3 yRadius: 3];
     [self.fillColor setFill];
     [fillPath fill];
 }
-
 
 - (void)drawProgressInFrame:(NSRect)frame {
     
@@ -251,7 +214,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [self.progressColor setFill];
     [progressPath fill];
 }
-
 
 - (void)drawBadgeWithCount:(NSInteger)badgeCount inFrame:(NSRect)frame {
     
@@ -262,7 +224,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     
     [self drawBadgeTextWithCount:badgeCount inFrame:frame];
 }
-
 
 - (void)drawBadgeTextWithCount:(NSInteger)badgeCount inFrame:(NSRect)frame {
     
@@ -283,9 +244,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     }
 }
 
-
 #pragma mark - Setup methodes
-
 
 - (void)setUpUndeterminedProgressIndicator {
     
@@ -312,7 +271,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
                                   constant:0.0f].active = YES;
     self.undeterminedProgressIndicator = progress;
 }
-
 
 - (void)setUpTextField {
     
@@ -352,9 +310,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     self.infoTextField = textField;
 }
 
-
 #pragma mark - Setter
-
 
 - (void)setOutlineColor:(NSColor *)outlineColor {
     
@@ -362,13 +318,11 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [self setNeedsDisplay:YES];
 }
 
-
 - (void)setFillColor:(NSColor *)fillColor {
     
     _fillColor = fillColor;
     [self setNeedsDisplay:YES];
 }
-
 
 - (void)setProgressColor:(NSColor *)progressColor {
     
@@ -376,13 +330,11 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [self setNeedsDisplay:YES];
 }
 
-
 - (void)setBadgeColor:(NSColor *)badgeColor {
     
     _badgeColor = badgeColor;
     [self setNeedsDisplay:YES];
 }
-
 
 - (void)setStringValue:(NSString *)stringValue {
     
@@ -408,16 +360,13 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     [self setNeedsDisplay:YES];
 }
 
-
 - (void)setBadgeCount:(NSUInteger)badgeCount {
     
     _badgeCount = badgeCount;
     [self setNeedsDisplay:YES];
 }
 
-
 #pragma mark - Getter/Lazy
-
 
 - (NSColor *)outlineColor {
     
@@ -428,7 +377,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     return _outlineColor;
 }
 
-
 - (NSColor *)fillColor {
     
     if (!_fillColor) {
@@ -436,7 +384,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     }
     return _fillColor;
 }
-
 
 - (NSColor *)progressColor {
     
@@ -446,7 +393,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     return _progressColor;
 }
 
-
 - (NSColor *)badgeColor {
     
     if (!_badgeColor) {
@@ -455,7 +401,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     }
     return _badgeColor;
 }
-
 
 #pragma mark -
 @end

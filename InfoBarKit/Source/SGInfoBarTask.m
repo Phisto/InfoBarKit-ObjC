@@ -9,37 +9,25 @@
 #import "SGInfoBarTask.h"
 
 #pragma mark - CATEGORIES
-///-----------------------------------
-/// @name CATEGORIES
-///-----------------------------------
-
 
 
 @interface SGInfoBarTask (/* Private */)
-
 /// A unique string identifying the task.
 @property (nonatomic, strong) NSString *uniqueID;
 
 @end
 
 
-
 #pragma mark - IMPLEMENTATION
-///-----------------------------------------
-/// @name IMPLEMENTATION
-///-----------------------------------------
-
 
 
 @implementation SGInfoBarTask
 #pragma mark - Creating a task
 
-
 + (instancetype)taskWithName:(NSString *)name {
     
     return [[[self class] alloc] initWithName:name];
 }
-
 
 - (instancetype)initWithName:(NSString *)name {
     
@@ -53,15 +41,12 @@
     return self;
 }
 
-
 - (instancetype)init {
     
     return [self initWithName:@""];
 }
 
-
 #pragma mark - Comparing task objects
-
 
 - (BOOL)isEqual:(id)object {
     
@@ -79,7 +64,6 @@
     
     return NO;
 }
-
 
 #pragma mark -
 @end

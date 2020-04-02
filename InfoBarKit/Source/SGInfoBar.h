@@ -32,19 +32,16 @@ NS_ASSUME_NONNULL_BEGIN
  @discussion <info bar text value> <info bar seperator value> <info bar secondary value>
  */
 @property (nonatomic, strong) IBInspectable NSString *stringValue;
-
 /**
  @brief The secondary string that is displayed by the info bar.
  @discussion <info bar text value> <info bar seperator value> <info bar secondary value>
  */
 @property (nonatomic, strong) IBInspectable NSString *seperatorValue;
-
 /**
  @brief The secondary string that is displayed by the info bar.
  @discussion <info bar text value> <info bar seperator value> <info bar secondary value>
  */
 @property (nonatomic, strong, nullable) IBInspectable NSString *secondaryStringValue;
-
 /**
  @brief The the number of task that are displayed by the info bar.
  */
@@ -63,30 +60,22 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) IBInspectable CGFloat progress;
 
 
-
 #pragma mark - Adding tasks
 ///--------------------------------------
 /// @name Adding tasks
 ///--------------------------------------
 
 /**
- 
  @brief Adds the given task to the info bar.
- 
  @param task The task to add.
- 
  */
 - (void)addTask:(SGInfoBarTask *)task;
 
 /**
- 
  @brief Adds the given tasks to the info bar.
- 
  @param tasks The tasks to add.
- 
  */
 - (void)addTasks:(NSArray<SGInfoBarTask *> *)tasks;
-
 
 
 #pragma mark - Removing tasks
@@ -95,23 +84,16 @@ NS_ASSUME_NONNULL_BEGIN
 ///-----------------------------------------
 
 /**
- 
  @brief Removes the given task from the info bar.
- 
  @param task The task to remove.
- 
  */
 - (void)removeTask:(SGInfoBarTask *)task;
 
 /**
- 
  @brief Removes the given tasks from the info bar.
- 
  @param tasks The tasks to remove.
- 
  */
 - (void)removeTasks:(NSArray<SGInfoBarTask *> *)tasks;
-
 
 
 #pragma mark - Appearance
@@ -137,6 +119,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBInspectable NSColor *badgeColor;
 
 
-
 @end
+
 NS_ASSUME_NONNULL_END
