@@ -14,5 +14,9 @@
 
 @property (nonatomic, weak) IBOutlet SGInfoBar *infoBar;
 
+@property (nonatomic, weak) IBOutlet NSTextField *stringValueTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *seperatorValueTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *secondaryStringValueTextField;
+
 @end
 

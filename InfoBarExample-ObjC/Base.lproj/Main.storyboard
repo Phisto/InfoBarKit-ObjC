@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -707,29 +707,32 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="479"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="oNV-SA-wYs" customClass="SGInfoBar">
-                                <rect key="frame" x="20" y="226" width="440" height="24"/>
+                                <rect key="frame" x="20" y="435" width="440" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="Qpu-bw-q8T"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="stringValue" value="WALKMAN"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="stringValue" value="Interface Builder"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="secondaryStringValue" value=" IB Values"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="seperatorValue" value="|"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="badgeCount">
-                                        <integer key="value" value="1"/>
+                                        <integer key="value" value="2"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="progress">
-                                        <real key="value" value="0.5"/>
+                                        <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="secondaryStringValue" value="Device Settings"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="seperatorValue" value="(^_^)"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                        <color key="value" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </customView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G2J-8A-c2T">
-                                <rect key="frame" x="14" y="178" width="66" height="32"/>
-                                <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QRa-18-iNY">
+                                <rect key="frame" x="14" y="167" width="127" height="32"/>
+                                <buttonCell key="cell" type="push" title="Undetermined" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QRa-18-iNY">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -737,22 +740,121 @@
                                     <action selector="test:" target="XfG-lQ-9wD" id="m6f-O8-ITf"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="15e-f7-2uC">
+                                <rect key="frame" x="18" y="249" width="81" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Badge count" id="Sui-EH-BZq">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ora-Ej-Fiz">
+                                <rect key="frame" x="102" y="243" width="19" height="28"/>
+                                <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="xyC-EY-GAl"/>
+                                <connections>
+                                    <action selector="changeBadgeCount:" target="XfG-lQ-9wD" id="fFn-nA-0nt"/>
+                                </connections>
+                            </stepper>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bmr-Mp-3uM">
+                                <rect key="frame" x="20" y="370" width="278" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="Interface Builder" drawsBackground="YES" id="wV2-fh-K7a">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ewa-sK-yax">
+                                <rect key="frame" x="20" y="339" width="278" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="|" drawsBackground="YES" id="2HF-BW-GpL">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4my-h7-pme">
+                                <rect key="frame" x="20" y="308" width="278" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="IB Values" drawsBackground="YES" id="hnt-13-ZKj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xUW-oB-w4B">
+                                <rect key="frame" x="300" y="363" width="166" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Set primary string" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wkv-C2-Hdz">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="setPrimaryString:" target="XfG-lQ-9wD" id="7zM-Te-nfQ"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1BT-J4-lbd">
+                                <rect key="frame" x="300" y="332" width="166" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Set seperator string" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ONG-zV-EbQ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="setSeperatorString:" target="XfG-lQ-9wD" id="JXm-mE-LtW"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yVV-OB-L1A">
+                                <rect key="frame" x="300" y="301" width="166" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Set secondary string" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UYv-Fp-o6H">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="setSecondaryString:" target="XfG-lQ-9wD" id="1Hy-Ob-hC6"/>
+                                </connections>
+                            </button>
+                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eko-Mf-fBA">
+                                <rect key="frame" x="102" y="207" width="19" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <stepperCell key="cell" continuous="YES" alignment="left" increment="0.001" maxValue="1" id="tU4-39-raA"/>
+                                <connections>
+                                    <action selector="changeProgress:" target="XfG-lQ-9wD" id="P04-yg-xr4"/>
+                                </connections>
+                            </stepper>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sia-Qh-Ujl">
+                                <rect key="frame" x="18" y="213" width="58" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Progress" id="ZJZ-BZ-82X">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="oNV-SA-wYs" secondAttribute="trailing" constant="20" id="1Kd-Uv-CTq"/>
+                            <constraint firstItem="15e-f7-2uC" firstAttribute="top" secondItem="oNV-SA-wYs" secondAttribute="bottom" constant="170" id="FWi-iy-4nB"/>
                             <constraint firstItem="oNV-SA-wYs" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="JCV-ix-Wk4"/>
-                            <constraint firstItem="G2J-8A-c2T" firstAttribute="top" secondItem="oNV-SA-wYs" secondAttribute="bottom" constant="20" id="LiA-0N-nUz"/>
+                            <constraint firstItem="G2J-8A-c2T" firstAttribute="top" secondItem="oNV-SA-wYs" secondAttribute="bottom" constant="240" id="LiA-0N-nUz"/>
                             <constraint firstItem="oNV-SA-wYs" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="Nqt-Si-baG"/>
+                            <constraint firstItem="Ora-Ej-Fiz" firstAttribute="leading" secondItem="15e-f7-2uC" secondAttribute="trailing" constant="8" id="c5g-6K-Jha"/>
+                            <constraint firstItem="15e-f7-2uC" firstAttribute="leading" secondItem="oNV-SA-wYs" secondAttribute="leading" id="oQQ-dt-xhW"/>
                             <constraint firstItem="G2J-8A-c2T" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="s0C-iG-21Y"/>
+                            <constraint firstItem="Ora-Ej-Fiz" firstAttribute="centerY" secondItem="15e-f7-2uC" secondAttribute="centerY" id="ygI-dC-mq8"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="infoBar" destination="oNV-SA-wYs" id="CVc-oj-0RQ"/>
+                        <outlet property="secondaryStringValueTextField" destination="4my-h7-pme" id="wde-5a-Vj3"/>
+                        <outlet property="seperatorValueTextField" destination="ewa-sK-yax" id="3Rf-vU-EmZ"/>
+                        <outlet property="stringValueTextField" destination="bmr-Mp-3uM" id="lfN-GY-iQA"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="759.5"/>
         </scene>
     </scenes>
 </document>

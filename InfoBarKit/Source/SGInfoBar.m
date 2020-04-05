@@ -82,7 +82,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 #pragma mark - Adding tasks
 
 - (void)addTask:(SGInfoBarTask *)task {
-  
+    
     [self.tasks addObject:task];
     [self recalculateDrawings];
 }
@@ -98,20 +98,16 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 - (void)removeTask:(SGInfoBarTask *)task {
     
     if (task) {
-        
         [self.tasks performSelector:@selector(removeObject:) withObject:task afterDelay:0.1f];
-        //[self.tasks removeObject:task];
         [self performSelector:@selector(recalculateDrawings) withObject:nil afterDelay:0.2f];
-        //[self recalculateDrawings];
     }
 }
 
 - (void)removeTasks:(NSArray<SGInfoBarTask *> *)tasks {
-    
-    [self.tasks performSelector:@selector(removeObjectsInArray:) withObject:tasks afterDelay:0.1f];
-    //[self.tasks removeObjectsInArray:tasks];
-    [self performSelector:@selector(recalculateDrawings) withObject:nil afterDelay:0.2f];
-    //[self recalculateDrawings];
+    if (tasks.count > 0) {
+        [self.tasks performSelector:@selector(removeObjectsInArray:) withObject:tasks afterDelay:0.1f];
+        [self performSelector:@selector(recalculateDrawings) withObject:nil afterDelay:0.2f];
+    }
 }
 
 #pragma mark - Calculate drawings
@@ -173,75 +169,104 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 #pragma mark - Drawing the view
 
 - (void)drawRect:(NSRect)dirtyRect {
-    // Drawing code here.
-    [self drawInfoBarWithFrame:dirtyRect];
+    
+    [self drawBar:dirtyRect];
+    [self drawBadge:dirtyRect];
 }
 
-- (void)drawInfoBarWithFrame:(NSRect)frame {
+- (void)drawBar:(NSRect)frame {
     
-    // outline drawing
-    [self drawOutlineInFrame:frame];
+    // inset the drawing as the
+    NSRect barDrawings = NSMakeRect(NSMinX(frame) + 0.5f, NSMinY(frame) + 0.5f, frame.size.width - 1.0f, frame.size.height - 1.0f);
+    // get drawing parameters
+    CGFloat cornerRadius = 5.0f;
+    CGFloat minX = NSMinX(barDrawings);
+    CGFloat minY = NSMinY(barDrawings);
+    CGFloat adjustedWidth = floor(barDrawings.size.width + 0.5);
+    CGFloat adjustedHeight = floor(barDrawings.size.height + 0.5);
+    CGFloat progressWidth = floor(barDrawings.size.width * _progress + 0.5);
     
-    // fill drawing
-    [self drawFillingInFrame:frame];
-    
-    // progress drawing
-    if (_tasks.firstObject.determined) [self drawProgressInFrame:frame];
-    
-    // draw badge
-    if (_badgeCount > 0) [self drawBadgeWithCount:_badgeCount inFrame:frame];
-}
-
-- (void)drawOutlineInFrame:(NSRect)frame {
-    
-    //// outline Drawing
-    NSBezierPath* outlinePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame), NSMinY(frame) + frame.size.height - 24, floor((frame.size.width) * 1.00000 + 0.5), 24) xRadius: 3 yRadius: 3];
-    [self.outlineColor setFill];
-    [outlinePath fill];
-}
-
-- (void)drawFillingInFrame:(NSRect)frame {
-    
-    NSBezierPath* fillPath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 1, NSMinY(frame) + frame.size.height - 23, floor((frame.size.width - 1) * 0.99791 + 0.5), 22) xRadius: 3 yRadius: 3];
+    //// fillRect Drawing
+    NSBezierPath* fillRectPath = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(minX, minY, adjustedWidth, adjustedHeight) xRadius:cornerRadius yRadius:cornerRadius];
     [self.fillColor setFill];
-    [fillPath fill];
-}
-
-- (void)drawProgressInFrame:(NSRect)frame {
+    [fillRectPath fill];
     
-    CGFloat progressLength = frame.size.width * _progress;
-    NSBezierPath* progressPath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(1, 1, progressLength, 22) xRadius: 3 yRadius: 3];
+    //// progressFillRect Drawing
+    NSBezierPath* progressFillRectPath;
+    if (progressWidth > 4.0f && progressWidth < frame.size.width-3.0f) {
+        NSRect progressFillRectRect = NSMakeRect(minX, minY, progressWidth, adjustedHeight);
+        NSRect progressFillRectInnerRect = NSInsetRect(progressFillRectRect, cornerRadius, cornerRadius);
+        // draw path
+        progressFillRectPath = [NSBezierPath bezierPath];
+        [progressFillRectPath appendBezierPathWithArcWithCenter: NSMakePoint(NSMinX(progressFillRectInnerRect), NSMinY(progressFillRectInnerRect)) radius:cornerRadius startAngle:180 endAngle:270];
+        [progressFillRectPath lineToPoint: NSMakePoint(NSMaxX(progressFillRectRect), NSMinY(progressFillRectRect))];
+        [progressFillRectPath lineToPoint: NSMakePoint(NSMaxX(progressFillRectRect), NSMaxY(progressFillRectRect))];
+        [progressFillRectPath appendBezierPathWithArcWithCenter: NSMakePoint(NSMinX(progressFillRectInnerRect), NSMaxY(progressFillRectInnerRect)) radius:cornerRadius startAngle:90 endAngle:180];
+        [progressFillRectPath closePath];
+    }
+    else {
+        progressFillRectPath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(minX, minY, progressWidth, adjustedHeight) xRadius:cornerRadius yRadius:cornerRadius];
+    }
     [self.progressColor setFill];
-    [progressPath fill];
+    [progressFillRectPath fill];
+    
+    //// outlineRect Drawing
+    [self.outlineColor setStroke];
+    fillRectPath.lineWidth = 1;
+    [fillRectPath stroke];
 }
 
-- (void)drawBadgeWithCount:(NSInteger)badgeCount inFrame:(NSRect)frame {
+- (void)drawBadge:(NSRect)frame {
     
-    //// badgeOutline Drawing
-    NSBezierPath* badgeOutlinePath = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(NSMinX(frame) + frame.size.width - 21, NSMinY(frame) + frame.size.height - 19, 14, 14)];
+    if (_badgeCount == 0) {
+        return;
+    }
+    
+    CGFloat badgeWidth = [self widthFromBadgeCount:_badgeCount];
+    
+    //// Rectangle Drawing
+    NSRect rectangleRect = NSMakeRect(NSMinX(frame) + frame.size.width - (badgeWidth+7), NSMinY(frame) + floor((frame.size.height - 14) * 0.50000 + 0.5), badgeWidth, 14);
+    NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: rectangleRect xRadius: 7 yRadius: 7];
     [self.badgeColor setFill];
-    [badgeOutlinePath fill];
-    
-    [self drawBadgeTextWithCount:badgeCount inFrame:frame];
-}
-
-- (void)drawBadgeTextWithCount:(NSInteger)badgeCount inFrame:(NSRect)frame {
-    
-    //// Text Drawing
-    NSRect textRect = NSMakeRect(NSMinX(frame) + frame.size.width - 21, NSMinY(frame) + frame.size.height - 19, 14, 14);
+    [rectanglePath fill];
     {
-        NSString* textContent = [NSString stringWithFormat:@"%lu", _badgeCount];;
-        NSMutableParagraphStyle* textStyle = [[NSMutableParagraphStyle alloc] init];
-        textStyle.alignment = NSTextAlignmentCenter;
-        NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont systemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: self.fillColor, NSParagraphStyleAttributeName: textStyle};
+        NSString* textContent = [NSString stringWithFormat:@"%lu", _badgeCount];
+        NSMutableParagraphStyle* rectangleStyle = [[NSMutableParagraphStyle alloc] init];
+        rectangleStyle.alignment = NSCenterTextAlignment;
+        NSDictionary* rectangleFontAttributes = @{NSFontAttributeName: [NSFont fontWithName: @"HelveticaNeue" size: [NSFont systemFontSizeForControlSize: NSMiniControlSize]], NSForegroundColorAttributeName:self.fillColor, NSParagraphStyleAttributeName: rectangleStyle};
         
-        CGFloat textTextHeight = [textContent boundingRectWithSize: textRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes].size.height;
-        NSRect textTextRect = NSMakeRect(NSMinX(textRect), NSMinY(textRect) + (textRect.size.height - textTextHeight) / 2, textRect.size.width, textTextHeight);
+        CGFloat rectangleTextHeight = [textContent boundingRectWithSize: rectangleRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: rectangleFontAttributes].size.height;
+        NSRect rectangleTextRect = NSMakeRect(NSMinX(rectangleRect), NSMinY(rectangleRect)-1.0f + (rectangleRect.size.height - rectangleTextHeight) / 2, rectangleRect.size.width, rectangleTextHeight);
         [NSGraphicsContext saveGraphicsState];
-        NSRectClip(textRect);
-        [textContent drawInRect: NSOffsetRect(textTextRect, 0, 0) withAttributes: textFontAttributes];
+        NSRectClip(rectangleRect);
+        [textContent drawInRect: NSOffsetRect(rectangleTextRect, 0, 3) withAttributes: rectangleFontAttributes];
         [NSGraphicsContext restoreGraphicsState];
     }
+}
+
+- (CGFloat)widthFromBadgeCount:(NSUInteger)badgeCount {
+    
+    CGFloat badgeWidth = 16.0f;
+    
+    if (_badgeCount >= 10) {
+        badgeWidth = 21.0f;
+    }
+    if (_badgeCount >= 100) {
+        badgeWidth = 26.0f;
+    }
+    if (_badgeCount >= 1000) {
+        badgeWidth = 31.0f;
+    }
+    if (_badgeCount >= 10000) {
+        badgeWidth = 35.0f;
+    }
+    if (_badgeCount >= 100000) {
+        badgeWidth = 41.0f;
+    }
+    if (_badgeCount >= 1000000) {
+        badgeWidth = 47.0f;
+    }
+    return badgeWidth;
 }
 
 #pragma mark - Setup methodes
@@ -282,6 +307,9 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
     textField.drawsBackground = NO;
     textField.textColor = [NSColor controlTextColor];
     textField.lineBreakMode = NSLineBreakByTruncatingTail;
+    
+    [textField setContentCompressionResistancePriority:NSLayoutPriorityDefaultLow forOrientation:NSLayoutConstraintOrientationHorizontal];
+    
     [self addSubview:textField];
     textField.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint constraintWithItem:textField
@@ -300,6 +328,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
                                                        multiplier:1.0
                                                          constant:kSGTextFieldMinMarign];
     self.labelConstraint.active = YES;
+    
     [NSLayoutConstraint constraintWithItem:textField
                                  attribute:NSLayoutAttributeTrailing
                                  relatedBy:NSLayoutRelationEqual
@@ -307,6 +336,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
                                  attribute:NSLayoutAttributeTrailing
                                 multiplier:1.0
                                   constant:-30.0f].active = YES;
+    
     self.infoTextField = textField;
 }
 
@@ -396,7 +426,7 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 - (NSColor *)badgeColor {
     
     if (!_badgeColor) {
-        //_badgeColor = [NSColor colorWithRed: 0.879 green: 0.373 blue: 0.373 alpha: 1];
+        //_badgeColor = [NSColor colorWithRed: 0.879 green: 0.373 blue: 0.373 alpha:1];
         _badgeColor = [NSColor linkColor];
     }
     return _badgeColor;

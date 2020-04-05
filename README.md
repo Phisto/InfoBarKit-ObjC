@@ -21,10 +21,14 @@ The InfoBarKit framework provides an info bar view similar to the info bar in th
 github "Phisto/InfoBarKit-ObjC" ~> 0.1
 ```
 
-### Manually
+### Manually as a framework
 
 If you prefer not to use Carthage, you can integrate InfoBarKit into your project manually.
 You only need to build and add the InfoBarKit framework (InfoBarKit.framework) to your project. 
+
+### Manually
+
+If you prefer not to use the framework you can copy the SGInfoBar and SGInfoBarTask class in the InfoBarKit/Source folder to your project.
 
 
 ## Usage
@@ -43,3 +47,4 @@ if (!erfolg) {
 ## License
 
 InfoBarKit is released under the [GNU Lesser General Public License (LGPL)](https://www.gnu.org/licenses/). 
+
