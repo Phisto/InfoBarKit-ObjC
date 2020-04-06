@@ -343,55 +343,46 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 #pragma mark - Setter
 
 - (void)setOutlineColor:(NSColor *)outlineColor {
-    
     _outlineColor = outlineColor;
     [self setNeedsDisplay:YES];
 }
 
 - (void)setFillColor:(NSColor *)fillColor {
-    
     _fillColor = fillColor;
     [self setNeedsDisplay:YES];
 }
 
 - (void)setProgressColor:(NSColor *)progressColor {
-    
     _progressColor = progressColor;
     [self setNeedsDisplay:YES];
 }
 
 - (void)setBadgeColor:(NSColor *)badgeColor {
-    
     _badgeColor = badgeColor;
     [self setNeedsDisplay:YES];
 }
 
 - (void)setStringValue:(NSString *)stringValue {
-    
     _stringValue = stringValue;
     [self drawText];
 }
 
 - (void)setSecondaryStringValue:(NSString *)secondaryStringValue {
-    
     _secondaryStringValue = secondaryStringValue;
     [self drawText];
 }
 
 - (void)setSeperatorValue:(NSString *)seperatorValue {
-    
     _seperatorValue = seperatorValue;
     [self drawText];
 }
 
 - (void)setProgress:(CGFloat)progress {
-    
     _progress = progress;
     [self setNeedsDisplay:YES];
 }
 
 - (void)setBadgeCount:(NSUInteger)badgeCount {
-    
     _badgeCount = badgeCount;
     [self setNeedsDisplay:YES];
 }
@@ -401,7 +392,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 - (NSColor *)outlineColor {
     
     if (!_outlineColor) {
-        
         _outlineColor = [NSColor disabledControlTextColor];
     }
     return _outlineColor;
@@ -426,7 +416,6 @@ static CGFloat const kSGTextFieldMaxMarign = 25.0f;
 - (NSColor *)badgeColor {
     
     if (!_badgeColor) {
-        //_badgeColor = [NSColor colorWithRed: 0.879 green: 0.373 blue: 0.373 alpha:1];
         _badgeColor = [NSColor linkColor];
     }
     return _badgeColor;
