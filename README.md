@@ -31,19 +31,6 @@ You only need to build and add the InfoBarKit framework (InfoBarKit.framework) t
 If you prefer not to use the framework you can copy the SGInfoBar and SGInfoBarTask class in the InfoBarKit/Source folder to your project.
 
 
-## Usage
-
-```objectivec
-
-NSError *encodingError = nil;
-BOOL erfolg = [mp3Encoder executeTask:task error:&encodingError];
-if (!erfolg) {
-    <#// handle failure...#>
-}
-
-```
-
-
 ## License
 
 InfoBarKit is released under the [GNU Lesser General Public License (LGPL)](https://www.gnu.org/licenses/). 
