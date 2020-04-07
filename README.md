@@ -15,7 +15,7 @@ The InfoBarKit framework provides an info bar view similar to the info bar in th
 
 ### Carthage
 
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks. To integrate CoreAudioConverter into your Xcode project using Carthage, specify it in your `Cartfile`:
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks. To integrate InfoBarKit into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
 github "Phisto/InfoBarKit-ObjC" ~> 0.1
